@@ -1,12 +1,24 @@
 let player = document.querySelector(".player");
 let bat = document.querySelector(".bat");
-let zombie = document.querySelector(".zombie")
+const zombies = document.querySelectorAll('.zombie');
+const zombie = zombies[0];
 let playground = document.querySelector('.game-area');
 let scoreBoard = document.querySelector('#score');
 let liveBoard = document.querySelectorAll('.live');
-let score = 0;
-let lives = 3;
+let score;
+let lives;
+let zombieInterval;
 gameStart();
+function gameStart() {
+    score = 0;
+    lives = 3;
+    resetPosition();
+    resetScoreBoard();
+    updateLivesBoard();
+    clearInterval(zombieInterval);
+    zombieInterval = setInterval(() => { moveAllZombies(zombies); }, 300);
+}
+
 window.addEventListener("keyup", keyEffect);
 function keyEffect(e) {
     if (e.key === 'ArrowUp') {
@@ -29,8 +41,6 @@ function keyEffect(e) {
     }
     if (isTouching(player, bat))
         touched(bat);
-    if (isTouching(player, zombie))
-        touched(zombie);
 }
 
 function isTouching(a, b) {
@@ -58,32 +68,55 @@ function isNear(a, b) {
         aRect.left + padding > bRect.left + bRect.width - padding
     );
 }
-function gameStart() {
+
+function resetPosition() {
     do {
         setRandomPosotion(bat);
-    } while (isNear(player, bat));
-    do {
-        setRandomPosotion(zombie);
-    } while (
-        isNear(player, zombie) || isNear(bat, zombie)
-    );
+    }
+    while (isNear(player, bat));
+    zombies.forEach(currentZombie => {
+        do {
+            setRandomPosotion(currentZombie);
+        } while (
+            isNear(player, currentZombie) || isNear(bat, currentZombie) || isNearOtherZombies(currentZombie)
+        );
+    });
 
+}
+function isNearOtherZombies(currentZombie) {
+    for (const zombie of zombies) {
+        if (getComputedStyle(zombie).display === 'none')
+            continue;
+        if (zombie === currentZombie)
+            continue;
+        if (isNear(currentZombie, zombie))
+            return true;
+    }
+    return false;
+}
+function resetScoreBoard() {
+    scoreBoard.textContent = '00000000';
+}
+function updateLivesBoard() {
+    liveBoard.forEach(element => {
+        element.style.display = 'block';
+    });
 }
 function touched(touchedObject) {
     if (touchedObject === bat) {
         addScore(5);
     }
-    if (touchedObject === zombie) {
+    if (touchedObject.classList.contains('zombie')) {
         liveBoard[lives - 1].style.display = "none";
         lives--;
         if (lives === 0)
             lose();
     }
-    gameStart();
+    resetPosition();
 }
 function lose() {
     alert('you lose ');
-
+    gameStart();
 }
 function isNearBorder(object, moveValue, direction) {
 
@@ -99,6 +132,10 @@ function isNearBorder(object, moveValue, direction) {
         return true;
 
     return false;
+}
+// setInterval(moveZombie, 500);
+function moveZombie(zombie) {
+
 }
 function addScore(points) {
     score += points;
@@ -124,4 +161,72 @@ function moveHorizontal(object, count) {
 function setRandomPosotion(object) {
     object.style.top = `${randomForVertical(object)}px`;
     object.style.left = `${randomForHorizan(object)}px`;
+}
+function moveAllZombies(zombies) {
+    zombies.forEach(zombie => {
+        moveZombie(zombie);
+    });
+}
+function moveZombie(zombie) {
+    const random = Math.random();
+    const zombieLeft = parseFloat(getComputedStyle(zombie).left);
+    const zombieTop = parseFloat(getComputedStyle(zombie).top);
+    const playerLeft = parseFloat(getComputedStyle(player).left);
+    const playerTop = parseFloat(getComputedStyle(player).top);
+    const step = 20;
+    if (random < 0.3) {
+        const direction = Math.floor(Math.random() * 4);
+        switch (direction) {
+            case 0:
+                if (!isNearBorder(zombie, -step, 'Y'))
+                    moveVertical(zombie, -step);
+                break;
+            case 1:
+                if (!isNearBorder(zombie, step, 'Y'))
+                    moveVertical(zombie, step);
+                break;
+            case 2:
+                if (!isNearBorder(zombie, -step, 'X')) {
+                    moveHorizontal(zombie, -step);
+                    zombie.style.transform = 'scale(-1,1)';
+                }
+
+                break;
+            case 3:
+                if (!isNearBorder(zombie, step, 'X')) {
+                    moveHorizontal(zombie, step);
+                    zombie.style.transform = 'scale(1,1)';
+                }
+
+                break;
+        }
+    } else {
+        const xDistance = Math.abs(playerLeft - zombieLeft);
+        const yDistance = Math.abs(playerTop - zombieTop);
+        if (xDistance > yDistance) {
+            if (playerLeft > zombieLeft) {
+                if (!isNearBorder(zombie, step, 'X')) {
+                    moveHorizontal(zombie, step);
+                    zombie.style.transform = 'scale(1,1)';
+                }
+
+            } else {
+                if (!isNearBorder(zombie, -step, 'X')) {
+                    moveHorizontal(zombie, -step);
+                    zombie.style.transform = 'scale(-1,1)';
+                }
+
+            }
+        } else {
+            if (playerTop > zombieTop) {
+                if (!isNearBorder(zombie, step, 'Y'))
+                    moveVertical(zombie, step);
+            } else {
+                if (!isNearBorder(zombie, -step, 'Y'))
+                    moveVertical(zombie, -step);
+            }
+        }
+    }
+    if (isTouching(player, zombie))
+        touched(zombie);
 }
