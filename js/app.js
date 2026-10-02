@@ -6,16 +6,22 @@ let score = 0;
 gameStart();
 window.addEventListener("keyup", keyEffect);
 function keyEffect(e) {
-    if (e.key === 'ArrowUp')
-        moveVertical(player, -50)
-    else if (e.key === 'ArrowDown')
-        moveVertical(player, +50)
+    if (e.key === 'ArrowUp') {
+        if (!isNearBorder(player, -50, 'Y'))
+            moveVertical(player, -50)
+    }
+    else if (e.key === 'ArrowDown') {
+        if (!isNearBorder(player, +50, 'Y'))
+            moveVertical(player, +50)
+    }
     else if (e.key === 'ArrowLeft') {
-        moveHorizontal(player, -50)
+        if (!isNearBorder(player, -50, 'X'))
+            moveHorizontal(player, -50)
         player.style.transform = 'scale(-1,1)';
     }
     else if (e.key === 'ArrowRight') {
-        moveHorizontal(player, +50)
+        if (!isNearBorder(player, +50, 'X'))
+            moveHorizontal(player, +50)
         player.style.transform = 'scale(1,1)';
     }
     if (isTouching(player, bat))
@@ -50,7 +56,21 @@ function touched(touchedObject) {
     gameStart(player, bat);
 
 }
+function isNearBorder(object, moveValue, direction) {
 
+    const nextPosition =
+        direction === 'X'
+            ? parseFloat(getComputedStyle(object).left) + moveValue
+            : parseFloat(getComputedStyle(object).top) + moveValue;
+    if (nextPosition < 0)
+        return true;
+    if (direction === 'X' && nextPosition + object.clientWidth > playground.clientWidth)
+        return true;
+    if (direction === 'Y' && nextPosition + object.clientHeight > playground.clientHeight)
+        return true;
+
+    return false;
+}
 function addScore(points) {
     score += points;
     scoreBoard.textContent = String(score).padStart(7, 0);

@@ -8,6 +8,7 @@ html {
   display: grid;
   height: 100vh;
   grid-template-rows: 4.5rem auto 1fr;
+
 }
 .head {
   display: flex;
