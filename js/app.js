@@ -1,3 +1,26 @@
+let player = document.querySelector(".player");
+let bat = document.querySelector(".bat");
+let playground = document.querySelector('.game-area');
+let scoreBoard = document.querySelector('#score');
+let score = 0;
+gameStart();
+window.addEventListener("keyup", keyEffect);
+function keyEffect(e) {
+    if (e.key === 'ArrowUp')
+        moveVertical(player, -50)
+    else if (e.key === 'ArrowDown')
+        moveVertical(player, +50)
+    else if (e.key === 'ArrowLeft') {
+        moveHorizontal(player, -50)
+        player.style.transform = 'scale(-1,1)';
+    }
+    else if (e.key === 'ArrowRight') {
+        moveHorizontal(player, +50)
+        player.style.transform = 'scale(1,1)';
+    }
+    if (isTouching(player, bat))
+        touched(bat)
+}
 function isTouching(a, b) {
     const aRect = a.getBoundingClientRect();
     const bRect = b.getBoundingClientRect();
@@ -20,43 +43,31 @@ function isNear(a, b) {
         aRect.left + padding > bRect.left + bRect.width - padding
     );
 }
-let player = document.querySelector(".player");
-let bat = document.querySelector(".bat");
-let playground = document.querySelector('.game-area');
-gameStart();
-window.addEventListener("keyup", keyEffect);
-function keyEffect(e) {
-    if (e.key === 'ArrowUp')
-        moveVertical(player, -50)
-    else if (e.key === 'ArrowDown')
-        moveVertical(player, +50)
-    else if (e.key === 'ArrowLeft') {
-        moveHorizontal(player, -50)
-        player.style.transform = 'scale(-1,1)';
-    }
-    else if (e.key === 'ArrowRight') {
-        moveHorizontal(player, +50)
-        player.style.transform = 'scale(1,1)';
-    }
-    if (isTouching(player, bat)) {
-        alert("you win the game!!")
-        gameStart(player, bat);
-    }
+
+function touched(touchedObject) {
+    alert("you win the game!!");
+    addScore(5);
+    gameStart(player, bat);
+
+}
+
+function addScore(points) {
+    score += points;
+    scoreBoard.textContent = String(score).padStart(7, 0);
 }
 function randomForVertical(object) {
-    let height = Math.floor(Math.random() * parseFloat(getComputedStyle(playground).height)) - parseFloat(getComputedStyle(object).height);
-    if (height < 0)
-        height *= -1;
-    return height;
-
+    const margin = 30;
+    const max = playground.clientHeight - object.clientHeight - margin;
+    return Math.floor(Math.random() * (max - margin)) + margin;
 }
 
 function randomForHorizan(object) {
-    let width = Math.floor(Math.random() * parseFloat(getComputedStyle(playground).width)) - parseFloat(getComputedStyle(object).width);
-    if (width < 0)
-        width *= -1;
-    return width;
+    const margin = 30;
+    const max = playground.clientWidth - object.clientWidth - margin;
+    return Math.floor(Math.random() * (max - margin)) + margin;
 }
+
+
 
 
 function moveVertical(object, count) {
