@@ -4,16 +4,17 @@ html {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 .page {
-  background-color: rgba(25, 42, 86, 1);
+  background-color: #081a3a;
   display: grid;
   height: 100vh;
-  grid-template-rows: 4.5rem auto 1fr;
+  grid-template-rows: 5rem auto 1fr;
 }
 .head {
   display: flex;
-  gap: 3rem;
+  gap: 1.5rem;
   align-items: center;
-  padding: 1rem;
+  padding: 0.7rem 1.2rem;
+  background: linear-gradient(180deg, #0b1f45 0%, #071533 100%);
 }
 .brand {
   display: flex;
@@ -22,9 +23,13 @@ html {
   flex-basis: 15%;
 }
 .icon {
-  background: url(https://img.icons8.com/?size=100&id=DWzU7zQ8T7Tb&format=png&color=000000)
-    50% 50% / contain no-repeat;
-  padding: 1.5rem;
+  background: url(../images/logo.png) 50% 50% / contain no-repeat;
+  width: 4.2rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 3px solid #000;
+  box-shadow: 0 0 10px rgba(252, 209, 22, 0.45);
+  flex-shrink: 0;
 }
 .label {
   font-size: large;
@@ -32,53 +37,128 @@ html {
   color: rgba(220, 221, 225, 1);
 }
 .box-for-head {
+  --c: #4bcffa;
+  --cut: 1.1rem;
+  --bw: 4px;
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.2rem;
-  color: rgba(75, 207, 250, 1);
+  height: 100%;
+  padding: 0 calc(var(--cut) + 1rem);
+  flex: 1;
+  color: rgba(220, 221, 225, 1);
   text-align: center;
-  height: 90%;
-  padding: 0.5rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 3px solid rgb(64, 107, 182);
-  flex-basis: 18%;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 0;
+  aspect-ratio: auto;
 }
-.score-box span {
-  color: rgb(228, 183, 59);
+.box-for-head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--c);
+  clip-path: polygon(
+    0 50%,
+    var(--cut) 0,
+    calc(100% - var(--cut)) 0,
+    100% 50%,
+    calc(100% - var(--cut)) 100%,
+    var(--cut) 100%
+  );
+  filter: drop-shadow(0 0 6px var(--c));
+}
+.box-for-head::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #0a1a3d;
+  clip-path: polygon(
+    var(--bw) 50%,
+    calc(var(--cut) + var(--bw)) 0,
+    calc(100% - var(--cut) - var(--bw)) 0,
+    calc(100% - var(--bw)) 50%,
+    calc(100% - var(--cut) - var(--bw)) 100%,
+    calc(var(--cut) + var(--bw)) 100%
+  );
+}
+.record-box {
+  --c: #4bcffa;
+}
+.score-box {
+  --c: #ffc400;
 }
 .timer-box {
-  display: flex;
+  --c: #2f8cff;
+}
+.lives-box {
+  --c: #ff3347;
+}
+
+.box-for-head span:not(.time) {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.score-box span,
+.record-box span {
+  color: #ffd22e;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+}
+.record-box span {
+  color: #4bcffa;
+}
+
+.timer-box {
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
-  padding-left: 3rem;
-  flex-basis: 10%;
+  padding-left: calc(var(--cut) + 1rem);
 }
 .disc-for-time {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.2rem;
+  text-align: left;
+}
+.disc-for-time span:first-child {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
 }
 .time {
   color: white;
   font-weight: bold;
+  font-size: 1.6rem;
+  line-height: 1;
 }
 .icon-for-time {
-  background: url(https://img.icons8.com/?size=100&id=63250&format=png&color=000000)
+  background: url(https://img.icons8.com/?size=100&id=63250&format=png&color=FFFFFF)
     50% 50% / contain no-repeat;
-  padding: 1rem;
+  padding: 1.1rem;
 }
+
 .lives-box {
-  display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  padding-left: 4rem;
-  gap: 0.5rem;
+  justify-content: center;
+  padding-left: calc(var(--cut) + 1rem);
+  gap: 0.3rem;
+}
+.lives-box > span {
+  font-size: 0.85rem !important;
+  letter-spacing: 1px;
 }
 .container {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 .live {
   background: url(https://img.icons8.com/?size=100&id=64452&format=png&color=000000)
@@ -87,8 +167,68 @@ html {
 }
 .game-area {
   background: url(../images/playground2.png) 50% 50%;
-  height: 70vh;
+  height: 80vh;
   position: relative;
+  margin: 0 1rem;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  outline: 3px solid #2a4f9a;
+  box-shadow: 0 0 18px rgba(47, 140, 255, 0.35);
+}
+.footer {
+  position: relative;
+  min-height: 4.5rem;
+  background: linear-gradient(180deg, #071533 0%, #050f26 100%);
+  margin-top: 0.8rem;
+}
+.footer-line {
+  position: absolute;
+  inset: 0;
+  background: #f5c400;
+  clip-path: polygon(
+    0 25%,
+    38.5% 25%,
+    42% 75%,
+    58% 75%,
+    61.5% 25%,
+    100% 25%,
+    100% calc(25% + 2px),
+    61.5% calc(25% + 2px),
+    58% calc(75% + 2px),
+    42% calc(75% + 2px),
+    38.5% calc(25% + 2px),
+    0 calc(25% + 2px)
+  );
+}
+.footer-logo {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  width: 12rem;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-logo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #0b1f45;
+  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+  opacity: 0.9;
+}
+.footer-logo-img {
+  position: relative;
+  width: 8rem;
+  height: 2.6rem;
+  background: url(https://img.icons8.com/?size=100&id=DWzU7zQ8T7Tb&format=png&color=2a4f9a)
+    50% 50% / contain no-repeat;
+}
+
+.mobile-controls {
+  display: none;
 }
 .player,
 .bat,
