@@ -121,34 +121,33 @@ function touched(touchedObject) {
     }
     resetPosition();
 }
-function checkScore() {
-    function checkScore() {
 
-        if (score >= 20) {
-            activateZombie(1);
-        }
-        if (score >= 40) {
-            activateZombie(2);
-            zombieStep = 30;
-        }
-        if (score >= 60 && zombieSpeed === 300) {
-            zombieSpeed = 200;
-            zombieStep = 40;
-            clearInterval(zombieInterval);
-            zombieInterval = setInterval(() => {
-                moveAllZombies();
-            }, zombieSpeed);
-        }
-        if (score >= 80 && zombieSpeed === 200) {
-            zombieSpeed = 100;
-            zombieStep = 50;
-            clearInterval(zombieInterval);
-            zombieInterval = setInterval(() => {
-                moveAllZombies();
-            }, zombieSpeed);
-        }
+function checkScore() {
+    if (score >= 20) {
+        activateZombie(1);
+    }
+    if (score >= 40) {
+        activateZombie(2);
+        zombieStep = 30;
+    }
+    if (score >= 60 && zombieSpeed === 300) {
+        zombieSpeed = 200;
+        zombieStep = 40;
+        clearInterval(zombieInterval);
+        zombieInterval = setInterval(() => {
+            moveAllZombies();
+        }, zombieSpeed);
+    }
+    if (score >= 80 && zombieSpeed === 200) {
+        zombieSpeed = 150;
+        zombieStep = 50;
+        clearInterval(zombieInterval);
+        zombieInterval = setInterval(() => {
+            moveAllZombies();
+        }, zombieSpeed);
     }
 }
+
 function lose() {
     alert('you lose ');
     gameStart();
