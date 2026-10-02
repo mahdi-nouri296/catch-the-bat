@@ -8,7 +8,6 @@ html {
   display: grid;
   height: 100vh;
   grid-template-rows: 4.5rem auto 1fr;
-
 }
 .head {
   display: flex;
@@ -92,6 +91,10 @@ html {
   position: relative;
 }
 .player,
-.bat {
+.bat,
+.zombie {
   position: absolute;
+}
+.zombie {
+  width: 100px;
 }
