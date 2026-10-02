@@ -1,7 +1,6 @@
 let player = document.querySelector(".player");
 let bat = document.querySelector(".bat");
 const zombies = document.querySelectorAll('.zombie');
-const zombie = zombies[0];
 let playground = document.querySelector('.game-area');
 let scoreBoard = document.querySelector('#score');
 let liveBoard = document.querySelectorAll('.live');
@@ -10,13 +9,16 @@ let lives;
 let zombieInterval;
 gameStart();
 function gameStart() {
+    player.style.top = '1rem';
+    player.style.left = '1rem';
     score = 0;
     lives = 3;
+    clearZombies();
     resetPosition();
     resetScoreBoard();
     updateLivesBoard();
     clearInterval(zombieInterval);
-    zombieInterval = setInterval(() => { moveAllZombies(zombies); }, 300);
+    zombieInterval = setInterval(() => { moveAllZombies(); }, 300);
 }
 
 window.addEventListener("keyup", keyEffect);
@@ -118,6 +120,11 @@ function lose() {
     alert('you lose ');
     gameStart();
 }
+function clearZombies() {
+    for (let i = 1; i < zombies.length; i++) {
+        zombies[i].style.display = 'none';
+    }
+}
 function isNearBorder(object, moveValue, direction) {
 
     const nextPosition =
@@ -162,8 +169,10 @@ function setRandomPosotion(object) {
     object.style.top = `${randomForVertical(object)}px`;
     object.style.left = `${randomForHorizan(object)}px`;
 }
-function moveAllZombies(zombies) {
+function moveAllZombies() {
     zombies.forEach(zombie => {
+        if (getComputedStyle(zombie).display === 'none')
+            return;
         moveZombie(zombie);
     });
 }
