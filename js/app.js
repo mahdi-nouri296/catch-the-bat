@@ -7,18 +7,22 @@ let liveBoard = document.querySelectorAll('.live');
 let score;
 let lives;
 let zombieInterval;
+let zombieSpeed;
+let zombieStep;
 gameStart();
 function gameStart() {
     player.style.top = '1rem';
     player.style.left = '1rem';
     score = 0;
     lives = 3;
+    zombieSpeed = 300;
+    zombieStep = 20;
     clearZombies();
     resetPosition();
     resetScoreBoard();
     updateLivesBoard();
     clearInterval(zombieInterval);
-    zombieInterval = setInterval(() => { moveAllZombies(); }, 300);
+    zombieInterval = setInterval(() => { moveAllZombies(); }, zombieSpeed);
 }
 
 window.addEventListener("keyup", keyEffect);
@@ -107,6 +111,7 @@ function updateLivesBoard() {
 function touched(touchedObject) {
     if (touchedObject === bat) {
         addScore(5);
+        checkScore();
     }
     if (touchedObject.classList.contains('zombie')) {
         liveBoard[lives - 1].style.display = "none";
@@ -115,6 +120,34 @@ function touched(touchedObject) {
             lose();
     }
     resetPosition();
+}
+function checkScore() {
+    function checkScore() {
+
+        if (score >= 20) {
+            activateZombie(1);
+        }
+        if (score >= 40) {
+            activateZombie(2);
+            zombieStep = 30;
+        }
+        if (score >= 60 && zombieSpeed === 300) {
+            zombieSpeed = 200;
+            zombieStep = 40;
+            clearInterval(zombieInterval);
+            zombieInterval = setInterval(() => {
+                moveAllZombies();
+            }, zombieSpeed);
+        }
+        if (score >= 80 && zombieSpeed === 200) {
+            zombieSpeed = 100;
+            zombieStep = 50;
+            clearInterval(zombieInterval);
+            zombieInterval = setInterval(() => {
+                moveAllZombies();
+            }, zombieSpeed);
+        }
+    }
 }
 function lose() {
     alert('you lose ');
@@ -182,7 +215,7 @@ function moveZombie(zombie) {
     const zombieTop = parseFloat(getComputedStyle(zombie).top);
     const playerLeft = parseFloat(getComputedStyle(player).left);
     const playerTop = parseFloat(getComputedStyle(player).top);
-    const step = 20;
+    const step = zombieStep;
     if (random < 0.3) {
         const direction = Math.floor(Math.random() * 4);
         switch (direction) {
@@ -238,4 +271,7 @@ function moveZombie(zombie) {
     }
     if (isTouching(player, zombie))
         touched(zombie);
+}
+function activateZombie(index) {
+    zombies[index].style.display = 'block';
 }
