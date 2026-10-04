@@ -7,7 +7,7 @@ html {
   background-color: #081a3a;
   display: grid;
   height: 100vh;
-  grid-template-rows: 5rem auto 1fr;
+  grid-template-rows: 4rem auto 1fr;
 }
 .head {
   display: flex;
@@ -179,7 +179,7 @@ html {
   position: relative;
   min-height: 4.5rem;
   background: linear-gradient(180deg, #071533 0%, #050f26 100%);
-  margin-top: 0.8rem;
+  /* margin-top: 0.8rem; */
 }
 .footer-line {
   position: absolute;
@@ -219,14 +219,13 @@ html {
   clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
   opacity: 0.9;
 }
+
 .footer-logo-img {
   position: relative;
   width: 8rem;
   height: 2.6rem;
-  background: url(https://img.icons8.com/?size=100&id=DWzU7zQ8T7Tb&format=png&color=2a4f9a)
-    50% 50% / contain no-repeat;
+  background: url(../images/logo.png) 50% 50% / contain no-repeat;
 }
-
 .mobile-controls {
   display: none;
 }
@@ -237,4 +236,73 @@ html {
 }
 .zombie {
   width: 100px;
+}
+.game-over {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(3, 10, 25, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+}
+.game-over.hidden {
+  display: none;
+}
+.game-over h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #ff3347;
+  text-shadow:
+    0 0 10px #ff3347,
+    0 0 20px #ff3347;
+  margin-bottom: 2rem;
+}
+.game-over p {
+  width: 22rem;
+  padding: 1rem;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  border: 2px solid #2f8cff;
+  background: rgba(10, 26, 61, 0.95);
+  clip-path: polygon(
+    0 50%,
+    1rem 0,
+    calc(100% - 1rem) 0,
+    100% 50%,
+    calc(100% - 1rem) 100%,
+    1rem 100%
+  );
+}
+.game-over span {
+  color: #ffd22e;
+}
+.restart-btn {
+  margin-top: 1.5rem;
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  color: #081a3a;
+  background: #ffd22e;
+  clip-path: polygon(
+    0 50%,
+    1rem 0,
+    calc(100% - 1rem) 0,
+    100% 50%,
+    calc(100% - 1rem) 100%,
+    1rem 100%
+  );
+
+  transition: 0.2s;
+}
+.restart-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ffd22e;
 }
