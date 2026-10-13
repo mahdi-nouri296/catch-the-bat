@@ -15,7 +15,7 @@ let zombieInterval;
 let timeInterval;
 let zombieSpeed;
 let zombieStep;
-// gameStart();
+gameStart();
 function gameStart() {
     player.style.top = "1rem";
     player.style.left = "1rem";
@@ -37,18 +37,21 @@ function gameStart() {
         moveAllZombies();
     }, zombieSpeed);
 }
-
+function getScale() {
+    return zombies[0].offsetWidth / 100;
+}
 window.addEventListener("keyup", keyEffect);
 function keyEffect(e) {
+    const step = 50 * getScale() * 1.3;
     if (e.key === "ArrowUp") {
-        if (!isNearBorder(player, -50, "Y")) moveVertical(player, -50);
+        if (!isNearBorder(player, -step, "Y")) moveVertical(player, -step);
     } else if (e.key === "ArrowDown") {
-        if (!isNearBorder(player, +50, "Y")) moveVertical(player, +50);
+        if (!isNearBorder(player, +step, "Y")) moveVertical(player, +step);
     } else if (e.key === "ArrowLeft") {
-        if (!isNearBorder(player, -50, "X")) moveHorizontal(player, -50);
+        if (!isNearBorder(player, -step, "X")) moveHorizontal(player, -step);
         player.style.transform = "scale(-1,1)";
     } else if (e.key === "ArrowRight") {
-        if (!isNearBorder(player, +50, "X")) moveHorizontal(player, +50);
+        if (!isNearBorder(player, +step, "X")) moveHorizontal(player, +step);
         player.style.transform = "scale(1,1)";
     }
     if (isTouching(player, bat)) touched(bat);
@@ -58,28 +61,44 @@ resetBtn.addEventListener('click', () => {
     gameStart();
 });
 
-function isTouching(a, b) {
-    const aRect = a.getBoundingClientRect();
-    const bRect = b.getBoundingClientRect();
-    const padding =   Math.min(aRect.width, aRect.height, bRect.width, bRect.height) * 0.4;
+// function isTouching(a, b) {
+//     const aRect = a.getBoundingClientRect();
+//     const bRect = b.getBoundingClientRect();
+//     const padding = Math.min(aRect.width, aRect.height, bRect.width, bRect.height) * 0.4;
 
-    return !(
-        aRect.top + aRect.height - padding < bRect.top + padding ||
-        aRect.top + padding > bRect.top + bRect.height - padding ||
-        aRect.left + aRect.width - padding < bRect.left + padding ||
-        aRect.left + padding > bRect.left + bRect.width - padding
-    );
+//     return !(
+//         aRect.top + aRect.height - padding < bRect.top + padding ||
+//         aRect.top + padding > bRect.top + bRect.height - padding ||
+//         aRect.left + aRect.width - padding < bRect.left + padding ||
+//         aRect.left + padding > bRect.left + bRect.width - padding
+//     );
+// }
+function shrink(rect, ratio) {
+    const px = rect.width * ratio;
+    const py = rect.height * ratio;
+    return {
+        left: rect.left + px,
+        right: rect.right - px,
+        top: rect.top + py,
+        bottom: rect.bottom - py,
+    };
 }
 
+function isTouching(a, b) {
+    const A = shrink(a.getBoundingClientRect(), 0.35);
+    const B = shrink(b.getBoundingClientRect(), 0.35);
+    return (
+        A.left < B.right && A.right > B.left &&
+        A.top < B.bottom && A.bottom > B.top
+    );
+}
 function isNear(a, b) {
-    const aRect = a.getBoundingClientRect();
-    const bRect = b.getBoundingClientRect();
-    const padding = -30;
-    return !(
-        aRect.top + aRect.height - padding < bRect.top + padding ||
-        aRect.top + padding > bRect.top + bRect.height - padding ||
-        aRect.left + aRect.width - padding < bRect.left + padding ||
-        aRect.left + padding > bRect.left + bRect.width - padding
+    const gap = 30 * getScale();
+    const A = a.getBoundingClientRect();
+    const B = b.getBoundingClientRect();
+    return (
+        A.left - gap < B.right + gap && A.right + gap > B.left - gap &&
+        A.top - gap < B.bottom + gap && A.bottom + gap > B.top - gap
     );
 }
 
@@ -161,6 +180,8 @@ function updateTime() {
 }
 function lose() {
     if (record < score) updateRecord(score);
+    clearInterval(zombieInterval);
+    clearInterval(timeInterval);
     document.querySelector('.final-score').textContent = score;
     document.querySelector('.final-time').textContent = time;
     document.querySelector('.final-record').textContent = record;
@@ -199,12 +220,12 @@ function addScore(points) {
     scoreBoard.textContent = String(score).padStart(8, 0);
 }
 function randomForVertical(object) {
-    const margin = 30;
+    const margin = 30 * getScale();
     const max = playground.clientHeight - object.clientHeight - margin;
     return Math.floor(Math.random() * (max - margin)) + margin;
 }
 function randomForHorizontal(object) {
-    const margin = 30;
+    const margin = 30 * getScale();
     const max = playground.clientWidth - object.clientWidth - margin;
     return Math.floor(Math.random() * (max - margin)) + margin;
 }
@@ -231,7 +252,7 @@ function moveZombie(zombie) {
     const zombieTop = parseFloat(getComputedStyle(zombie).top);
     const playerLeft = parseFloat(getComputedStyle(player).left);
     const playerTop = parseFloat(getComputedStyle(player).top);
-    const step = zombieStep;
+    const step = zombieStep * getScale();
     if (random < 0.3) {
         const direction = Math.floor(Math.random() * 4);
         switch (direction) {
