@@ -15,7 +15,7 @@ let zombieInterval;
 let timeInterval;
 let zombieSpeed;
 let zombieStep;
-gameStart();
+// gameStart();
 function gameStart() {
     player.style.top = "1rem";
     player.style.left = "1rem";
@@ -61,9 +61,7 @@ resetBtn.addEventListener('click', () => {
 function isTouching(a, b) {
     const aRect = a.getBoundingClientRect();
     const bRect = b.getBoundingClientRect();
-
-    const padding =
-        Math.min(aRect.width, aRect.height, bRect.width, bRect.height) * 0.4;
+    const padding =   Math.min(aRect.width, aRect.height, bRect.width, bRect.height) * 0.4;
 
     return !(
         aRect.top + aRect.height - padding < bRect.top + padding ||

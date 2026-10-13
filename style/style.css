@@ -2,14 +2,27 @@ html {
   font-size: 100%;
   box-sizing: border-box;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  width: 100%;
+  overflow-x: hidden;
+}
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+.game-area {
+  background-size: cover;
 }
 .page {
   background-color: #081a3a;
   display: grid;
   height: 100vh;
   grid-template-rows: 4rem auto 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  overflow: hidden;
 }
 .head {
+  min-width: 0;
   display: flex;
   gap: 1.5rem;
   align-items: center;
@@ -166,6 +179,7 @@ html {
   padding: 0.8rem;
 }
 .game-area {
+  min-width: 0;
   background: url(../images/playground2.png) 50% 50%;
   height: 80vh;
   position: relative;
@@ -176,9 +190,11 @@ html {
   box-shadow: 0 0 18px rgba(47, 140, 255, 0.35);
 }
 .footer {
+  min-width: 0;
   position: relative;
   min-height: 4.5rem;
   background: linear-gradient(180deg, #071533 0%, #050f26 100%);
+
   /* margin-top: 0.8rem; */
 }
 .footer-line {
@@ -305,4 +321,187 @@ html {
 .restart-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 20px #ffd22e;
+}
+ /* tablet responsive */
+@media (max-width: 768px) {
+  .page {
+    height: 100vh;
+    height: 100dvh;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  .head {
+    gap: 0.6rem;
+    padding: 0.5rem 0.7rem;
+    height: 3.6rem;
+  }
+  .brand {
+    flex-basis: auto;
+  }
+  .label {
+    display: none;
+  }
+  .icon {
+    width: 3rem;
+    height: 2rem;
+  }
+  .box-for-head {
+    --cut: 0.8rem;
+    --bw: 3px;
+    padding: 0 calc(var(--cut) + 0.5rem);
+  }
+  .timer-box,
+  .lives-box {
+    padding-left: calc(var(--cut) + 0.5rem);
+  }
+  .game-area {
+    height: auto;
+    min-height: 0;
+    margin: 0.5rem;
+  }
+  .zombie {
+    width: 70px;
+  }
+  .player {
+    width: 45px;
+  }
+  .bat {
+    width: 60px;
+  }
+}
+
+/* mobile responsive */
+@media (max-width: 450px) {
+  .head {
+    height: 2.8rem;
+    gap: 0.25rem;
+    padding: 0.3rem 0.4rem;
+  }
+  .brand {
+    display: none;
+  }
+  .box-for-head {
+    --cut: 0.5rem;
+    --bw: 2px;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 0.1rem;
+    padding: 0 calc(var(--cut) + 0.1rem);
+    font-size: 0.5rem;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  .head .box-for-head span:not(.time) {
+    font-size: clamp(0.6rem, 3.4vw, 0.8rem);
+    letter-spacing: 0;
+  }
+  .time {
+    font-size: clamp(0.75rem, 3.6vw, 0.9rem);
+  }
+  .head .box-for-head span:not(.time) {
+    font-size: 0.8rem;
+    letter-spacing: 0;
+  }
+  .head .lives-box > span {
+    font-size: 0.55rem !important;
+    letter-spacing: 0;
+  }
+  .timer-box {
+    flex-direction: column;
+    gap: 0;
+    padding-left: calc(var(--cut) + 0.2rem);
+  }
+  .icon-for-time {
+    display: none;
+  }
+  .disc-for-time {
+    text-align: center;
+    gap: 0.1rem;
+  }
+  .disc-for-time span:first-child {
+    font-size: 0.55rem;
+    letter-spacing: 0;
+  }
+  .time {
+    font-size: 0.9rem;
+  }
+  .lives-box {
+    padding-left: calc(var(--cut) + 0.2rem);
+    gap: 0.15rem;
+  }
+  .container {
+    gap: 0.15rem;
+  }
+  .live {
+    padding: 0.4rem;
+  }
+
+  .game-area {
+    margin: 0.4rem;
+    border-radius: 0.5rem;
+    outline-width: 2px;
+  }
+
+  .zombie {
+    width: 30px;
+  }
+  .player {
+    width: 50px;
+  }
+  .bat {
+    width: 35px;
+  }
+
+  .footer {
+    min-height: 0;
+  }
+  .footer-line,
+  .footer-logo {
+    display: none;
+  }
+  .mobile-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem 0.8rem;
+  }
+  .control {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .control.vertical {
+    flex-direction: column;
+  }
+  .mobile-controls button {
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffd22e;
+    background: #0a1a3d;
+    border: 2px solid #2f8cff;
+    border-radius: 0.6rem;
+    box-shadow: 0 0 8px rgba(47, 140, 255, 0.45);
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-controls button:active {
+    background: #2f8cff;
+    color: #081a3a;
+    transform: scale(0.93);
+  }
+  .game-over h1 {
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+  }
+  .game-over p {
+    width: 85vw;
+    font-size: 1.1rem;
+    padding: 0.7rem;
+  }
+  .restart-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
 }
