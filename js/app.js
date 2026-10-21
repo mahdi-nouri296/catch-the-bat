@@ -7,6 +7,10 @@ let liveBoard = document.querySelectorAll(".live");
 let recordBoard = document.querySelector("#record");
 let timeBoard = document.querySelector(".time");
 let resetBtn = document.querySelector('.restart-btn');
+let upBtn = document.querySelector('#up');
+let downBtn = document.querySelector('#down');
+let rightBtn = document.querySelector('#right');
+let leftBtn = document.querySelector('#left');
 let score;
 let record = 0;
 let time = 0;
@@ -15,6 +19,8 @@ let zombieInterval;
 let timeInterval;
 let zombieSpeed;
 let zombieStep;
+console.log(upBtn);
+
 gameStart();
 function gameStart() {
     player.style.top = "1rem";
@@ -40,17 +46,21 @@ function gameStart() {
 function getScale() {
     return zombies[0].offsetWidth / 100;
 }
-window.addEventListener("keyup", keyEffect);
-function keyEffect(e) {
+upBtn.addEventListener("click", () => movePlayer(null, "up"));
+downBtn.addEventListener("click", () => movePlayer(null, "down"));
+leftBtn.addEventListener("click", () => movePlayer(null, "left"));
+rightBtn.addEventListener("click", () => movePlayer(null, "right"));
+window.addEventListener("keyup", movePlayer);
+function movePlayer(e, btn) {
     const step = 50 * getScale() * 1.3;
-    if (e.key === "ArrowUp") {
+    if (e?.key === "ArrowUp" || btn === 'up') {
         if (!isNearBorder(player, -step, "Y")) moveVertical(player, -step);
-    } else if (e.key === "ArrowDown") {
+    } else if (e?.key === "ArrowDown" || btn === 'down') {
         if (!isNearBorder(player, +step, "Y")) moveVertical(player, +step);
-    } else if (e.key === "ArrowLeft") {
+    } else if (e?.key === "ArrowLeft" || btn === 'left') {
         if (!isNearBorder(player, -step, "X")) moveHorizontal(player, -step);
         player.style.transform = "scale(-1,1)";
-    } else if (e.key === "ArrowRight") {
+    } else if (e?.key === "ArrowRight" || btn === 'right') {
         if (!isNearBorder(player, +step, "X")) moveHorizontal(player, +step);
         player.style.transform = "scale(1,1)";
     }
