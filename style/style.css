@@ -322,7 +322,7 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 20px #ffd22e;
 }
- /* tablet responsive */
+/* tablet responsive */
 @media (max-width: 768px) {
   .page {
     height: 100vh;
@@ -458,38 +458,58 @@ body {
   .footer-logo {
     display: none;
   }
+
   .mobile-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 0.5rem 1rem 0.8rem;
+    width: 100%;
+    padding: 12px 0;
   }
-  .control {
+  .controls {
+    display: grid;
+    grid-template-columns: 54px 54px 54px;
+    grid-template-rows: 54px 54px 54px;
+    gap: 5px;
+    grid-template-areas:
+      ". up ."
+      "left . right"
+      ". down .";
+  }
+  .controls button {
+    width: 54px;
+    height: 54px;
+    padding: 0;
     display: flex;
-    gap: 0.5rem;
-  }
-  .control.vertical {
-    flex-direction: column;
-  }
-  .mobile-controls button {
-    width: 6rem;
-    height: 6rem;
-    font-size: 1.4rem;
+    justify-content: center;
+    align-items: center;
+    background: #0b2045;
+    color: #ffdf00;
+    border: 2px solid #168cff;
+    border-radius: 12px;
+    font-size: 25px;
     font-weight: bold;
-    color: #ffd22e;
-    background: #0a1a3d;
-    border: 2px solid #2f8cff;
-    border-radius: 0.6rem;
-    box-shadow: 0 0 8px rgba(47, 140, 255, 0.45);
     cursor: pointer;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
+
+    transition:
+      background-color 0.1s,
+      transform 0.1s;
   }
-  .mobile-controls button:active {
-    background: #2f8cff;
-    color: #081a3a;
-    transform: scale(0.93);
+  .controls button:active {
+    background: #16396b;
+    transform: scale(0.94);
+  }
+  .controls .up {
+    grid-area: up;
+  }
+  .controls .left {
+    grid-area: left;
+  }
+  .controls .down {
+    grid-area: down;
+  }
+  .controls .right {
+    grid-area: right;
   }
   .game-over h1 {
     font-size: 2.4rem;
