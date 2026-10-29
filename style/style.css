@@ -396,6 +396,15 @@ body {
 
 /* mobile responsive */
 @media (max-width: 450px) {
+      .page {
+    height: 100vh;
+    height: 100dvh;
+    grid-template-rows: 2.8rem minmax(0, 1fr) auto;
+  }
+  .game-area {
+    height: auto;
+    min-height: 0;
+  }
   .head {
     height: 2.8rem;
     gap: 0.25rem;
