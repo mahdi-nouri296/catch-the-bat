@@ -323,77 +323,75 @@ body {
   box-shadow: 0 0 20px #ffd22e;
 }
 .start-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.1rem;
-    padding: 1rem;
-    background: rgba(3, 10, 30, 0.8);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    font-family: "Georgia", "Times New Roman", serif;
-    color: #fff;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  padding: 1rem;
+  background: rgba(3, 10, 30, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: "Georgia", "Times New Roman", serif;
+  color: #fff;
 }
 .start-title {
-    margin: 0;
-    font-size: clamp(2.2rem, 8vw, 4.5rem);
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    color: #ff3548;
-    text-shadow:
-        0 0 10px rgba(255, 53, 72, 0.9),
-        0 0 25px rgba(255, 53, 72, 0.6),
-        0 0 45px rgba(255, 53, 72, 0.4);
+  margin: 0;
+  font-size: clamp(2.2rem, 8vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #ff3548;
+  text-shadow:
+    0 0 10px rgba(255, 53, 72, 0.9),
+    0 0 25px rgba(255, 53, 72, 0.6),
+    0 0 45px rgba(255, 53, 72, 0.4);
 }
 .start-subtitle {
-    margin: -0.6rem 0 0.6rem;
-    font-size: clamp(1rem, 3.5vw, 1.6rem);
-    font-weight: 400;
-    color: #9fb4e8;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+  margin: -0.6rem 0 0.6rem;
+  font-size: clamp(1rem, 3.5vw, 1.6rem);
+  font-weight: 400;
+  color: #9fb4e8;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 .start-box {
-    width: min(90vw, 480px);
-    padding: 1.3rem 1rem;
-    text-align: center;
-    font-size: clamp(1rem, 3.5vw, 1.4rem);
-    font-weight: 700;
-    background: linear-gradient(135deg, #0a1a45, #0c2050);
-    border-top: 2px solid #2f80ff;
-    border-bottom: 2px solid #2f80ff;
-    clip-path: polygon(
-        4% 0, 96% 0, 100% 50%, 96% 100%, 4% 100%, 0 50%
-    );
+  width: min(90vw, 480px);
+  padding: 1.3rem 1rem;
+  text-align: center;
+  font-size: clamp(1rem, 3.5vw, 1.4rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #0a1a45, #0c2050);
+  border-top: 2px solid #2f80ff;
+  border-bottom: 2px solid #2f80ff;
+  clip-path: polygon(4% 0, 96% 0, 100% 50%, 96% 100%, 4% 100%, 0 50%);
 }
 .start-box span {
-    color: #ffd32a;
+  color: #ffd32a;
 }
 .start-btn {
-    margin-top: 0.8rem;
-    padding: 1rem 3.2rem;
-    border: none;
-    cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #0a1230;
-    background: #ffd32a;
-    clip-path: polygon(
-        10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%
-    );
-    transition: transform 0.15s, background 0.15s;
+  margin-top: 0.8rem;
+  padding: 1rem 3.2rem;
+  border: none;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0a1230;
+  background: #ffd32a;
+  clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+  transition:
+    transform 0.15s,
+    background 0.15s;
 }
 .start-btn:hover {
-    background: #ffe066;
-    transform: scale(1.05);
+  background: #ffe066;
+  transform: scale(1.05);
 }
 .start-btn:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 /* mobile responsive */
@@ -548,6 +546,27 @@ body {
     padding: 0.7rem;
   }
   .restart-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+  .start-screen {
+    gap: 0.9rem;
+    padding: 0.8rem;
+  }
+  .start-title {
+    font-size: 2.4rem;
+    margin-bottom: 0.2rem;
+  }
+  .start-subtitle {
+    font-size: 1rem;
+    margin: -0.4rem 0 0.4rem;
+  }
+  .start-box {
+    width: 85vw;
+    font-size: 1.1rem;
+    padding: 0.7rem;
+  }
+  .start-btn {
     padding: 0.8rem 2rem;
     font-size: 1rem;
   }
