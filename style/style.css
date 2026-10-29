@@ -174,7 +174,7 @@ body {
   gap: 0.5rem;
 }
 .live {
-  background: url(https://img.icons8.com/?size=100&id=64452&format=png&color=000000)
+  background: url(https://img.icons8.com/?size=100&id=64452&format=png&color=000000) 
     50% 50% / contain no-repeat;
   padding: 0.8rem;
 }

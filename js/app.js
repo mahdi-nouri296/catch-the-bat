@@ -19,10 +19,18 @@ let zombieInterval;
 let timeInterval;
 let zombieSpeed;
 let zombieStep;
+let damage = new Audio("../sounds/damage.wav");
+let getPoint = new Audio("../sounds/get-point.wav");
+let gameOver = new Audio("../sounds/game-over.wav");
+let backgroundSound = new Audio("../sounds/background.mp3");
+backgroundSound.volume = 0.3;
+backgroundSound.loop = true;
 gameStart();
 function gameStart() {
     player.style.top = "1rem";
     player.style.left = "1rem";
+    backgroundSound.currentTime=0;
+    backgroundSound.play()
     score = 0;
     lives = 3;
     time = 0;
@@ -111,7 +119,7 @@ function isNear(a, b) {
 }
 
 function resetPosition() {
-     const batStep = 50 * getScale() * 1.3;
+    const batStep = 50 * getScale() * 1.3;
     do {
         setRandomPosotion(bat);
     } while (
@@ -149,12 +157,16 @@ function updateLivesBoard() {
 }
 function touched(touchedObject) {
     if (touchedObject === bat) {
+        getPoint.currentTime = 0;
+        getPoint.play();
         addScore(5);
         checkScore();
     }
     if (touchedObject.classList.contains("zombie")) {
         liveBoard[lives - 1].style.display = "none";
         lives--;
+        damage.currentTime = 0;
+        damage.play();
         if (lives === 0) lose();
     }
     resetPosition();
@@ -194,6 +206,9 @@ function updateTime() {
     timeBoard.textContent = String(time);
 }
 function lose() {
+    gameOver.currentTime = 0;
+    backgroundSound.pause();
+    gameOver.play();
     if (record < score) updateRecord(score);
     clearInterval(zombieInterval);
     clearInterval(timeInterval);
