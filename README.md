@@ -21,6 +21,8 @@ Control Batman, catch bats to earn points, and survive against zombies that beco
 - Multiple lives
 - Random spawning mechanics
 - Progressive difficulty scaling
+- Responsive design
+- Mobile controls
 - Zombie AI with two different movement behaviors:
   - Random wandering movement
   - Player-chasing movement
@@ -43,11 +45,8 @@ Control Batman, catch bats to earn points, and survive against zombies that beco
 - Event Handling
 
 ## Future Improvements
-
-- Mobile controls
-- Responsive design
 - Pause menu
-
+- sound effects
 ## Author
 Mahdi Nouri
 
