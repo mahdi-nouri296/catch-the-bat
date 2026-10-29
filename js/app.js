@@ -11,6 +11,8 @@ let upBtn = document.querySelector('#up');
 let downBtn = document.querySelector('#down');
 let rightBtn = document.querySelector('#right');
 let leftBtn = document.querySelector('#left');
+let startBtn = document.querySelector('.start-btn');
+let controlBtns = [upBtn, downBtn, rightBtn, leftBtn];
 let score;
 let record = 0;
 let time = 0;
@@ -19,18 +21,22 @@ let zombieInterval;
 let timeInterval;
 let zombieSpeed;
 let zombieStep;
-let damage = new Audio("../sounds/damage.wav");
-let getPoint = new Audio("../sounds/get-point.wav");
-let gameOver = new Audio("../sounds/game-over.wav");
-let backgroundSound = new Audio("../sounds/background.mp3");
+let damage = new Audio("./sounds/damage.wav");
+let getPoint = new Audio("./sounds/get-point.wav");
+let gameOver = new Audio("./sounds/game-over.wav");
+let backgroundSound = new Audio("./sounds/background.mp3");
 backgroundSound.volume = 0.3;
 backgroundSound.loop = true;
-gameStart();
+startBtn.addEventListener('click', () => {
+    document.querySelector(".start-screen").style.display = "none";
+    gameStart();
+})
+
 function gameStart() {
     player.style.top = "1rem";
     player.style.left = "1rem";
-    backgroundSound.currentTime=0;
-    backgroundSound.play()
+    backgroundSound.currentTime = 0;
+    backgroundSound.play();
     score = 0;
     lives = 3;
     time = 0;
@@ -49,6 +55,7 @@ function gameStart() {
         moveAllZombies();
     }, zombieSpeed);
 }
+
 function getScale() {
     return zombies[0].offsetWidth / 100;
 }
