@@ -19,8 +19,6 @@ let zombieInterval;
 let timeInterval;
 let zombieSpeed;
 let zombieStep;
-console.log(upBtn);
-
 gameStart();
 function gameStart() {
     player.style.top = "1rem";
