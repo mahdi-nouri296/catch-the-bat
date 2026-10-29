@@ -111,9 +111,16 @@ function isNear(a, b) {
 }
 
 function resetPosition() {
+     const batStep = 50 * getScale() * 1.3;
     do {
         setRandomPosotion(bat);
-    } while (isNear(player, bat));
+    } while (
+        isNear(player, bat) ||
+        isNearBorder(bat, batStep, "X") ||
+        isNearBorder(bat, -batStep, "X") ||
+        isNearBorder(bat, batStep, "Y") ||
+        isNearBorder(bat, -batStep, "Y")
+    );
     zombies.forEach((currentZombie) => {
         do {
             setRandomPosotion(currentZombie);
@@ -203,10 +210,7 @@ function clearZombies() {
     }
 }
 function isNearBorder(object, moveValue, direction) {
-    const nextPosition =
-        direction === "X"
-            ? parseFloat(getComputedStyle(object).left) + moveValue
-            : parseFloat(getComputedStyle(object).top) + moveValue;
+    const nextPosition = direction === "X" ? parseFloat(getComputedStyle(object).left) + moveValue : parseFloat(getComputedStyle(object).top) + moveValue;
     if (nextPosition < 0) return true;
     if (
         direction === "X" &&
